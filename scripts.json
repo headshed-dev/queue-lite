@@ -1,0 +1,5 @@
+{
+    "script2": "/path/to/script2",
+    "script3": "/path/to/script3",
+    "PostExportJob-cms-lite001": "./run.sh"
+}

@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
+	"log"
 	"os"
 
 	"github.com/headshed-dev/queue-lite/internal/queue"
@@ -48,12 +49,22 @@ func (db *Database) PostPayload(ctx context.Context, job queue.Job) (queue.Job, 
 	return job, nil
 }
 
-/*
-func (d *Database) PostPayload(ctx context.Context, payload []byte) error {
-	_, e := d.Client.Put(0, 0, 120, payload)
+func (db *Database) ConsumeJobs(ctx context.Context) (queue.Job, error) {
+
+	job, e := db.Client.Reserve()
 	if e != nil {
-		return fmt.Errorf("failed to post payload to beanstalkd : %w", e)
+		return queue.Job{}, fmt.Errorf("failed to consume job from beanstalkd : %w", e)
 	}
-	return nil
+	log.Printf("JOB ID: %d, JOB BODY: %s", job.Id, job.Body)
+	e = db.Client.Delete(job.Id)
+	if e != nil {
+		return queue.Job{}, fmt.Errorf("failed to delete job from beanstalkd : %w", e)
+	}
+
+	convertedJob := queue.Job{
+		Name:    fmt.Sprintf("%d", job.Id),
+		Payload: job.Body,
+	}
+
+	return convertedJob, nil
 }
-*/
