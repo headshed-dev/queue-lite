@@ -26,6 +26,7 @@ type Service struct {
 // Store - defines method for storing queue payloads
 type Store interface {
 	PostPayload(ctx context.Context, job Job) (Job, error)
+	ConsumeJobs(ctx context.Context) (Job, error)
 }
 
 // NewQueue is a constructor for the Queue Service
@@ -33,17 +34,6 @@ func NewService(store Store) *Service {
 	return &Service{
 		Store: store,
 	}
-}
-
-// PublishPayload is a method that publishes a queue payload
-func (s *Service) PublishPayload(ctx context.Context, job Job) (Job, error) {
-
-	insertedQueue, err := s.Store.PostPayload(ctx, job)
-	if err != nil {
-		fmt.Printf("error: %v\n", err)
-		return Job{}, ErrSubmittingPayload
-	}
-	return insertedQueue, nil
 }
 
 func (s *Service) PostJob(ctx context.Context, job Job) (Job, error) {
@@ -59,8 +49,16 @@ func (s *Service) PostJob(ctx context.Context, job Job) (Job, error) {
 
 }
 
-func (s *Service) ConsumePayload(ctx context.Context) (Job, error) {
-	return Job{}, ErrNotImplemented
+func (s *Service) ConsumeJobs(ctx context.Context) (Job, error) {
+
+	log.Printf("consuming jobs\n")
+	readJob, err := s.Store.ConsumeJobs(ctx)
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+		return Job{}, ErrNotImplemented
+	}
+	return readJob, nil
+
 }
 
 func (s *Service) ListJobs(ctx context.Context) ([]Job, error) {
