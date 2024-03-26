@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 )
 
 var (
@@ -36,13 +37,26 @@ func NewService(store Store) *Service {
 
 // PublishPayload is a method that publishes a queue payload
 func (s *Service) PublishPayload(ctx context.Context, job Job) (Job, error) {
-	fmt.Println("publishing queue", job.Name)
+
 	insertedQueue, err := s.Store.PostPayload(ctx, job)
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 		return Job{}, ErrSubmittingPayload
 	}
 	return insertedQueue, nil
+}
+
+func (s *Service) PostJob(ctx context.Context, job Job) (Job, error) {
+
+	log.Printf("posting job: [%s]\n", job.Payload)
+
+	insertedQueue, err := s.Store.PostPayload(ctx, job)
+	if err != nil {
+		fmt.Printf("error: %v\n", err)
+		return Job{}, ErrSubmittingPayload
+	}
+	return insertedQueue, nil
+
 }
 
 func (s *Service) ConsumePayload(ctx context.Context) (Job, error) {
