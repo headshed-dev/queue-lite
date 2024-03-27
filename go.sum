@@ -2,3 +2,5 @@ github.com/gorilla/mux v1.8.1 h1:TuBL49tXwgrFYWhqrNgrUNEY92u81SPhu7sTdzQEiWY=
 github.com/gorilla/mux v1.8.1/go.mod h1:AKf9I4AEqPTmMytcMc0KkNouC66V3BtZ4qD5fmWSiMQ=
 github.com/nutrun/lentil v0.0.0-20160922095934-a0aa7412e0f7 h1:ttGOTJSSs3P6UmlUcCZmoaOu8KoMENWeZan8mJo7Acc=
 github.com/nutrun/lentil v0.0.0-20160922095934-a0aa7412e0f7/go.mod h1:ULCUiImiDZuXZRTtB0LyRu3gK3q3Gdgl6vvq9KclN7g=
+github.com/stretchr/testify v1.9.0 h1:HtqpIVDClZ4nwg75+f6Lvsy/wHu+3BoSGCbBAcpTsTg=
+github.com/stretchr/testify v1.9.0/go.mod h1:r2ic/lqez/lEtzL7wO/rwa5dbSLXVDPFyf8C91i36aY=

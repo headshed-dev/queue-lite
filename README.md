@@ -32,5 +32,11 @@ docker build -t queue-lite:001 .
 docker run -d -p 8080:8080 -e BEANSTALKD_HOST=localhost -e BEANSTALKD_PORT=11300 queue-lite:001
 ```
 
+# Tests
 
+integration tests run with
+
+```bash
+BEANSTALKD_HOST="localhost" BEANSTALKD_PORT="11300" go test -tags=integration -v ./...
+```
 
