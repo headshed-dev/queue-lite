@@ -11,8 +11,8 @@ import (
 )
 
 type JobJSON struct {
-	Name    string `json:"Name"`
-	Payload string `json:"Payload"`
+	Name    string `json:"name"`
+	Payload string `json:"payload"`
 }
 
 type JobService interface {

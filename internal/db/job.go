@@ -5,14 +5,9 @@ import (
 	"log"
 )
 
-// type Job struct {
-// 	Name    string
-// 	Payload string
-// }
-
 type Job struct {
-	Name    string `json:"Name"`
-	Payload string `json:"Payload"`
+	Name    string `json:"name"`
+	Payload string `json:"payload"`
 }
 
 func (d *Database) AddJob(
