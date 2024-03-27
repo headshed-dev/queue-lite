@@ -48,13 +48,14 @@ func (h *Handler) PostJob(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	w.WriteHeader(http.StatusCreated)
+
 	if err := json.NewEncoder(w).Encode(submittedJob); err != nil {
 		log.Println("Failed to encode job:", err)
 		http.Error(w, "Failed to encode job", http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
 }
 
 func (h *Handler) GetJobs(w http.ResponseWriter, r *http.Request) {
