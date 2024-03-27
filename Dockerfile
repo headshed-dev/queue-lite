@@ -1,8 +1,8 @@
 # Start from the latest golang base image
-FROM golang:latest as builder
+FROM golang:1.21.1 as builder
 
 # Add Maintainer Info
-LABEL maintainer="Your Name <your.email@example.com>"
+LABEL maintainer="JOn Brookes <jonb@ajbc.co>"
 
 # Set the Current Working Directory inside the container
 WORKDIR /app
@@ -20,7 +20,7 @@ COPY . .
 RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o main ./cmd/server/main.go
 
 ######## Start a new stage from scratch #######
-FROM alpine:latest
+FROM alpine:3.19.1
 
 RUN apk --no-cache add ca-certificates
 
