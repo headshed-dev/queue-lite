@@ -40,3 +40,8 @@ integration tests run with
 BEANSTALKD_HOST="localhost" BEANSTALKD_PORT="11300" go test -tags=integration -v ./...
 ```
 
+acceptence tests run with
+
+```bash
+BEANSTALKD_HOST="localhost" BEANSTALKD_PORT="11300" go test -tags=e2e -v ./...
+```

@@ -35,8 +35,8 @@ func NewHandler(service JobService) *Handler {
 }
 
 func (h *Handler) mapRoutes() {
-	h.Router.HandleFunc("/hello", func(w http.ResponseWriter, r *http.Request) {
-		w.Write([]byte("hello world"))
+	h.Router.HandleFunc("/alive", func(w http.ResponseWriter, r *http.Request) {
+		w.Write([]byte("running"))
 	}).Methods("GET")
 
 	h.Router.HandleFunc("/api/v1/job", h.PostJob).Methods("POST")

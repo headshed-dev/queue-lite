@@ -18,24 +18,25 @@ type Job struct {
 	Payload []byte
 }
 
-// Service is a struct that represents the Queue Service
+// Service is the main struct that represents the Queue Service and is returned by the NewService constructor
 type Service struct {
 	Store Store
 }
 
-// Store - defines method for storing queue payloads
+// Store - defines method for storing queue payloads and is an interface passed to NewService
 type Store interface {
 	PostPayload(ctx context.Context, job Job) (Job, error)
 	ConsumeJobs(ctx context.Context) (Job, error)
 }
 
-// NewQueue is a constructor for the Queue Service
+// NewQueue is a constructor for the Queue Service, it accepts a store interface and returns a new Queue Service struct
 func NewService(store Store) *Service {
 	return &Service{
 		Store: store,
 	}
 }
 
+// PostJob is a method on the Queue Service that accepts a job payload and returns a Job struct
 func (s *Service) PostJob(ctx context.Context, job Job) (Job, error) {
 
 	log.Printf("posting job: [%s]\n", job.Payload)
@@ -49,6 +50,7 @@ func (s *Service) PostJob(ctx context.Context, job Job) (Job, error) {
 
 }
 
+// ConsumeJobs is a method on the Queue Service that returns a Job struct
 func (s *Service) ConsumeJobs(ctx context.Context) (Job, error) {
 
 	log.Printf("consuming jobs\n")
@@ -61,6 +63,7 @@ func (s *Service) ConsumeJobs(ctx context.Context) (Job, error) {
 
 }
 
+// ListJobs is a method on the Queue Service that returns a list of Job structs
 func (s *Service) ListJobs(ctx context.Context) ([]Job, error) {
 	return []Job{}, ErrNotImplemented
 }
