@@ -42,6 +42,11 @@ func (d *Database) Ping(ctx context.Context) error {
 }
 
 func (db *Database) PostPayload(ctx context.Context, job queue.Job) (queue.Job, error) {
+
+	log.Println("Adding job to tube:", job.Name)
+	log.Printf("Job payload: %s\n", job.Payload)
+
+	db.Client.Use((job.Name))
 	_, e := db.Client.Put(0, 0, 120, job.Payload)
 	if e != nil {
 		return queue.Job{}, fmt.Errorf("failed to post payload to beanstalkd : %w", e)

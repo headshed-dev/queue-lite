@@ -39,8 +39,6 @@ func NewService(store Store) *Service {
 // PostJob is a method on the Queue Service that accepts a job payload and returns a Job struct
 func (s *Service) PostJob(ctx context.Context, job Job) (Job, error) {
 
-	log.Printf("posting job: [%s]\n", job.Payload)
-
 	insertedQueue, err := s.Store.PostPayload(ctx, job)
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
