@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"log"
+	"os"
 	"os/exec"
 
 	"github.com/headshed-dev/queue-lite/internal/db"
@@ -17,7 +17,7 @@ func run() error {
 	fmt.Println("starting consumer app")
 
 	// Read the scripts file
-	data, err := ioutil.ReadFile("scripts.json")
+	data, err := os.ReadFile("scripts.json")
 	if err != nil {
 		log.Fatalf("Failed to read file: %v", err)
 	}
@@ -38,18 +38,13 @@ func run() error {
 		return err
 	}
 	queueService := queue.NewService(db)
+
 	newJob, err := queueService.ConsumeJobs(context.Background())
 	if err != nil {
 		fmt.Printf("error: %v\n", err)
 		return err
 	}
 	fmt.Printf("job: [%s]\n", newJob.Payload)
-
-	// scripts := map[string]string{
-	// 	"script2":                   "/path/to/script2",
-	// 	"script3":                   "/path/to/script3",
-	// 	"PostExportJob-cms-lite001": "/path/to/script1",
-	// }
 
 	script, ok := scripts[string(newJob.Payload)]
 	if !ok {
