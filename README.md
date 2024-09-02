@@ -20,6 +20,12 @@ run the command line consumer with something lik
 BEANSTALKD_HOST="localhost" BEANSTALKD_PORT="11300"  go run cmd/cli/main.go 
 ```
 
+or keep it up running with 
+
+```
+while true; do BEANSTALKD_HOST="localhost" BEANSTALKD_PORT="11300" go run cmd/cli/main.go; done
+```
+
 # build
 
 ```bash
